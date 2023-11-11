@@ -1,0 +1,117 @@
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap");
+
+.head-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.head-content section {
+  padding-top: 10px;
+}
+
+aside {
+  width: 300px;
+  font-family: "Ubuntu", sans-serif;
+  color: crimson;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+aside a {
+  width: 200px;
+  border: solid;
+  border-radius: 20px;
+  /* padding: 2px; */
+  background-color: #021024;
+  color: white;
+  text-decoration: none;
+}
+
+aside a:hover {
+  background-color: crimson;
+}
+
+aside p {
+  font-size: 20px;
+}
+
+.click-open-modal {
+  background-color: brown;
+  padding: 5px;
+  border-radius: 10px;
+  display: flex;
+  font-family: "Ubuntu", sans-serif;
+  width: 20%;
+  margin: auto;
+  margin-bottom: 20px;
+  border: solid;
+}
+
+.click-open-modal a {
+  text-decoration: none;
+  color: white;
+  margin: auto;
+}
+
+.buttons {
+  display: flex;
+}
+
+.pen {
+  background-color: green;
+}
+
+.pen,
+.trash {
+  width: 10%;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30px;
+  margin-left: 5px;
+}
+
+.pen a,
+.trash a {
+  text-decoration: none;
+  color: white;
+}
+
+.trash {
+  background-color: red;
+}
+
+/* MODAL */
+.modal1 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #021024bd;
+  display: flex;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.modal--show {
+  opacity: 1;
+  pointer-events: unset;
+}
+
+.modal_container {
+  width: 90%;
+  margin: auto;
+  max-width: 600px;
+  max-height: 90%;
+  border-radius: 6px;
+  padding: 20px;
+  background-color: #fff;
+  gap: 1em;
+  display: grid;
+  place-items: center;
+}

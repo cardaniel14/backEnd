@@ -1,8 +1,25 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+@import url("https://fonts.googleapis.com/css2?family=Arsenal:wght@700&family=Libre+Franklin:wght@600&family=Nunito:wght@700&family=Raleway:ital,wght@1,600&display=swap");
+
+.header {
+  background-color: #021024 !important;
+  height: 100px;
 }
 
-a {
-  color: #00B7FF;
+.headerDiv {
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  align-items: flex-start;
+  margin-left: 40px;
+}
+
+.headerDiv h1 {
+  color: white;
+  margin-top: 8px;
+  font-family: "Libre Franklin", serif;
+}
+
+.headerDiv h2 {
+  color: white;
+  font-family: "Libre Franklin", serif;
 }
