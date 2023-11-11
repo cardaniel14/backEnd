@@ -2,11 +2,116 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="/stylesheets/novedades.css" />
+    <script
+      src="https://kit.fontawesome.com/7a70007765.js"
+      crossorigin="anonymous"
+    ></script>
     <title>Document</title>
   </head>
   <body>
-    <h1>Pudiste entrar {{nombre}}</h1>
-    <a href="/admin/login/logout">Cerrar sesion</a>
+    <div class="container-fluid head-content">
+      <section>
+        <h2>Bienvenido a la sección de novedades</h2>
+        <p class="text-center">Aqui puedes adicionar, modificar o eliminar
+          novedades</p>
+      </section>
+      <aside>
+        <p class="m-3">Bienvenido/a de vuelta,
+          {{nombre}}</p>
+        <a href="/admin/login/logout" class="text-center"><i
+            class="fa-solid fa-arrow-right-from-bracket"
+          ></i>
+          Cerrar sesion</a>
+      </aside>
+    </div>
+    <div class="click-open-modal">
+      <a class="text-center"><i class="fa-solid fa-plus"></i>
+        Click para adicionar novedad</a>
+    </div>
+    <section class="modal1">
+      <div class="modal_container">
+        <div class="modal_content">
+          <h2>Adicionar novedad</h2>
+          <form action="/admin/novedades/agregar" method="POST">
+            <div class="mb-3">
+              <input
+                type="text"
+                class="form-control"
+                name="titulo"
+                placeholder="Ingresa el titulo de la novedad"
+              />
+            </div>
+            <div class="mb-3">
+              <textarea
+                type="text"
+                class="form-control"
+                placeholder="Ingresa el subtitulo de la novedad"
+              ></textarea>
+            </div>
+            <div class="mb-3">
+              <textarea
+                type="text"
+                class="form-control"
+                name="cuerpo"
+                placeholder="Ingresa el cuerpo de la novedad"
+              ></textarea>
+            </div>
+            <a class="close-modal">Cerrar ventana</a>
+            <button type="submit" class="btn btn-primary">Adicionar</button>
+          </form>
+          {{#if error}}
+            <p class="error">ERROR</p>{{/if}}
 
+        </div>
+
+      </div>
+    </section>
+    <main class="container">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Titulo</th>
+            <th scope="col">Acciones</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          {{#each novedades}}
+            <tr>
+              <th class="col-1">{{id}}</th>
+              <td class="col-6">{{titulo}}</td>
+              <td class="col-12">
+                <div class="buttons">
+                  <div class="pen">
+                    <a class="pen-edit" href="#"><i
+                        class="fa-solid fa-pen"
+                      ></i></a>
+                  </div>
+                  <div class="trash">
+                    <a class="delete" href="#"><i
+                        class="fa-solid fa-trash"
+                      ></i></a>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          {{/each}}
+
+        </tbody>
+
+      </table>
+    </main>
+    <script>
+      const modal = document.querySelector(".modal1"); function closeModal() {
+      const closeModal1 = document.querySelector(".close-modal");
+      closeModal1.addEventListener("click", (e)=>{ e.preventDefault();
+      modal.classList.remove("modal--show"); }) } closeModal(); function
+      openModal(){ const openModal1 =
+      document.querySelector(".click-open-modal");
+      openModal1.addEventListener("click", (e) => { e.preventDefault();
+      modal.classList.add("modal--show"); }) } openModal();
+    </script>
   </body>
 </html>
