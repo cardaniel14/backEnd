@@ -46,6 +46,7 @@
               <textarea
                 type="text"
                 class="form-control"
+                name="subtitulo"
                 placeholder="Ingresa el subtitulo de la novedad"
               ></textarea>
             </div>
@@ -58,10 +59,17 @@
               ></textarea>
             </div>
             <a class="close-modal">Cerrar ventana</a>
-            <button type="submit" class="btn btn-primary">Adicionar</button>
+            <button
+              type="submit"
+              class="btn btn-primary"
+              id="addBtn"
+            >Adicionar</button>
           </form>
-          {{#if error}}
-            <p class="error">ERROR</p>{{/if}}
+          <p
+            id="errorMessage"
+            class="error"
+            style="color: red; display: none;"
+          >Todos los campos son requeridos</p>
 
         </div>
 
@@ -112,6 +120,14 @@
       document.querySelector(".click-open-modal");
       openModal1.addEventListener("click", (e) => { e.preventDefault();
       modal.classList.add("modal--show"); }) } openModal();
+      document.getElementById("addBtn").addEventListener("click", function (e) {
+      const titulo = document.querySelector('input[name="titulo"]').value; const
+      subtitulo = document.querySelector('textarea[name="subtitulo"]').value;
+      const cuerpo = document.querySelector('textarea[name="cuerpo"]').value; if
+      (titulo.trim() === "" || subtitulo.trim() === "" || cuerpo.trim() === "")
+      { // Mostrar el mensaje de error y evitar que se cierre el modal
+      e.preventDefault(); document.getElementById("errorMessage").style.display
+      = "block"; } });
     </script>
   </body>
 </html>
