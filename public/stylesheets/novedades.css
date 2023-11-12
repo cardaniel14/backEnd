@@ -48,6 +48,7 @@ aside p {
   margin: auto;
   margin-bottom: 20px;
   border: solid;
+  cursor: pointer;
 }
 
 .click-open-modal a {
