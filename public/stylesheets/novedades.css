@@ -97,11 +97,15 @@ aside p {
   display: flex;
   opacity: 0;
   pointer-events: none;
+  transition: opacity 0.6s;
+  --transform: translateY(-100vh);
+  --transition: transform 0.8s;
 }
 
 .modal--show {
   opacity: 1;
   pointer-events: unset;
+  --transform: translateY(0);
 }
 
 .modal_container {
@@ -115,4 +119,6 @@ aside p {
   gap: 1em;
   display: grid;
   place-items: center;
+  transform: var(--transform);
+  transition: var(--transition);
 }
