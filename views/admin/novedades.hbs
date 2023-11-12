@@ -125,9 +125,8 @@
       subtitulo = document.querySelector('textarea[name="subtitulo"]').value;
       const cuerpo = document.querySelector('textarea[name="cuerpo"]').value; if
       (titulo.trim() === "" || subtitulo.trim() === "" || cuerpo.trim() === "")
-      { // Mostrar el mensaje de error y evitar que se cierre el modal
-      e.preventDefault(); document.getElementById("errorMessage").style.display
-      = "block"; } });
+      { e.preventDefault();
+      document.getElementById("errorMessage").style.display = "block"; } });
     </script>
   </body>
 </html>
