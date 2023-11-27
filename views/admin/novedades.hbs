@@ -25,10 +25,10 @@
           Cerrar sesion</a>
       </aside>
     </div>
-    <div class="click-open-modal">
-      <a class="text-center"><i class="fa-solid fa-plus"></i>
-        Click para adicionar novedad</a>
-    </div>
+    <button class="click-open-modal btn btn-primary " onclick="openModal()">
+      {{!-- <i class="fa-solid fa-plus"></i> --}}
+        Click para adicionar novedad
+    </button>
     <section class="modal1">
       <div class="modal_container">
         <div class="modal_content">
@@ -58,7 +58,7 @@
                 placeholder="Ingresa el cuerpo de la novedad"
               ></textarea>
             </div>
-            <a class="close-modal btn btn-danger">Cerrar</a>
+            <a class="close-modal btn btn-danger" onclick="closeModal()">Cerrar</a>
             <button
               type="submit"
               class="btn btn-primary"
@@ -70,6 +70,51 @@
             class="error"
             style="color: red; display: none;"
           >Todos los campos son requeridos</p>
+
+        </div>
+
+      </div>
+    </section>
+    <section class="modalModif">
+      <div class="modal_container1">
+        <div class="modal_content">
+          <h2>Modificar novedad</h2>
+          <form action="/admin/novedades/modificar" method="post">
+            <input type="hidden" value="{{novedades.0.id}}" name="modifyModalId" id="modifyModalId" />
+            <div class="mb-3">
+              <label for="">Titulo</label>
+              <input
+                type="text"
+                class="form-control"
+                name="modifyModalTitulo"
+                id="modifyModalTitulo"
+                value="{{novedades.0.titulo}}"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="">Subtitulo</label>
+              <textarea
+                type="text"
+                class="form-control"
+                name="modifyModalSubtitulo"
+                id="modifyModalSubtitulo"
+              >{{novedades.0.subtitulo}}</textarea>
+            </div>
+            <div class="mb-3">
+              <label for="">Cuerpo</label>
+              <textarea
+                type="text"
+                class="form-control"
+                name="modifyModalCuerpo"
+                id="modifyModalCuerpo"
+              >{{novedades.0.cuerpo}}</textarea>
+            </div>
+            <button class="close-modalModif btn btn-danger" onclick="closeModal1()">Cerrar</button>
+            <button type="submit" class="btn btn-primary">Modificar</button>
+          </form>
+          {{#if error}}
+            <p>{{message}}</p>
+          {{/if}}
 
         </div>
 
@@ -92,13 +137,14 @@
               <td class="col-6">{{titulo}}</td>
               <td class="col-12">
                 <div class="buttons">
-                  <div class="pen">
-                    <a class="pen-edit" href="#"><i
-                        class="fa-solid fa-pen"
-                      ></i></a>
-                  </div>
+                  <button
+                    class="btn fa-solid fa-pen pencil"
+                    data-novedad_id="{{id}}"
+                    onclick="displayModifyModal({{id}},'{{titulo}}','{{subtitulo}}','{{cuerpo}}')"
+                  >
+                  </button>
                   <div class="trash">
-                    <a class="delete" href="#"><i
+                    <a class="delete" href="/admin/novedades/eliminar/{{id}}"><i
                         class="fa-solid fa-trash"
                       ></i></a>
                   </div>
@@ -112,21 +158,58 @@
       </table>
     </main>
     <script>
-      const modal = document.querySelector(".modal1"); function closeModal() {
-      const closeModal1 = document.querySelector(".close-modal");
-      closeModal1.addEventListener("click", (e)=>{ e.preventDefault();
-      modal.classList.remove("modal--show"); }) } closeModal(); function
-      openModal(){ const openModal1 =
-      document.querySelector(".click-open-modal");
-      openModal1.addEventListener("click", (e) => { e.preventDefault();
-      modal.classList.add("modal--show"); }) } openModal();
+      const modal = document.querySelector(".modal1"); 
+      
+      function closeModal() {
+          modal.classList.remove("modal--show");        
+      }
+      
+      function openModal() {
+          modal.classList.add("modal--show");        
+      }
+
       document.getElementById("addBtn").addEventListener("click", function (e) {
-      const titulo = document.querySelector('input[name="titulo"]').value; const
-      subtitulo = document.querySelector('textarea[name="subtitulo"]').value;
-      const cuerpo = document.querySelector('textarea[name="cuerpo"]').value; if
-      (titulo.trim() === "" || subtitulo.trim() === "" || cuerpo.trim() === "")
-      { e.preventDefault();
-      document.getElementById("errorMessage").style.display = "block"; } });
+        const titulo = document.querySelector('input[name="titulo"]').value;
+        const subtitulo = document.querySelector('textarea[name="subtitulo"]').value;
+        const cuerpo = document.querySelector('textarea[name="cuerpo"]').value;
+        if (titulo.trim() === "" || subtitulo.trim() === "" || cuerpo.trim() === "") {
+          e.preventDefault();
+          document.getElementById("errorMessage").style.display = "block";
+        }
+      });
+      const modalModif = document.querySelector(".modalModif");
+      function closeModal1() {
+        modalModif.classList.remove("modal--show");
+        //const closeModal1 = document.querySelector(".close-modalModif");
+        //closeModal1.addEventListener("click", (e) => {
+        //  e.preventDefault();
+        //modalModif.classList.remove("modal--show");
+        //});
+      }
+      function openModal1() {
+        const openModal = document.querySelector(".pen");
+        console.log(openModal);
+
+        openModal.addEventListener("click", (e) => {
+          console.log("eeee", e);
+          console.log("novedad id: ", e.dataset.novedad_id);
+          e.preventDefault();
+          modalModif.classList.add("modal--show");
+        });
+      }
+      function displayModifyModal(novedadId, title, subTitle,novedadBody) {
+        
+        let id = document.getElementById("modifyModalId");
+        let titulo = document.getElementById("modifyModalTitulo");
+        let subtitulo = document.getElementById("modifyModalSubtitulo");
+        let cuerpo = document.getElementById("modifyModalCuerpo"); 
+        id.value = novedadId;
+        titulo.value = title;
+        subtitulo.value = subTitle;
+        cuerpo.value= novedadBody;  
+
+        modalModif.classList.add("modal--show");
+      }
     </script>
   </body>
 </html>

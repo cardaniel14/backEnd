@@ -74,6 +74,7 @@ aside p {
   align-items: center;
   height: 30px;
   margin-left: 5px;
+  cursor: pointer;
 }
 
 .pen a,
@@ -87,7 +88,8 @@ aside p {
 }
 
 /* MODAL */
-.modal1 {
+.modal1,
+.modalModif {
   position: fixed;
   top: 0;
   left: 0;
@@ -108,7 +110,8 @@ aside p {
   --transform: translateY(0);
 }
 
-.modal_container {
+.modal_container,
+.modal_container1 {
   width: 90%;
   margin: auto;
   max-width: 600px;
