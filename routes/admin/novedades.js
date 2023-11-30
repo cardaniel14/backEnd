@@ -4,11 +4,13 @@ var novedadesModel = require("../../models/novedadesModel");
 var util = require("util");
 var cloudinary = require("cloudinary").v2;
 var uploader = util.promisify(cloudinary.uploader.upload);
+var destroy = util.promisify(cloudinary.uploader.destroy);
 
 router.use(express.static("public"));
 
 router.get("/", async function (req, res, next) {
   var novedades = await novedadesModel.getNovedaddes();
+  
 
   novedades = novedades.map((novedad) => {
     if (novedad.img_id) {
@@ -16,7 +18,6 @@ router.get("/", async function (req, res, next) {
         width: 80,
         height: 80,
         crop: "fill",
-        borderRadius: "20%",
       });
       return {
         ...novedad, //por que le paso el spread?
@@ -25,6 +26,7 @@ router.get("/", async function (req, res, next) {
     } else {
       return {
         ...novedad,
+        imagen: "sin foto",
       };
     }
   });
@@ -36,6 +38,7 @@ router.get("/", async function (req, res, next) {
 });
 
 router.get("/agregar", (req, res, next) => {
+
   res.render("admin/novedades", {
     layout: "admin/layout",
   });
@@ -85,36 +88,44 @@ router.post("/agregar", async (req, res, next) => {
 
 router.get("/eliminar/:id", async (req, res, next) => {
   var id = req.params.id;
+
+  let novedad = await novedadesModel.getNovedadesById(id);
+  if (novedad.img_id) {
+    await destroy(novedad.img_id);
+  }
   await novedadesModel.deleteNovedades(id);
   res.redirect("/admin/novedades");
 });
 
-router.get("/modificar/:id", async (req, res, next) => {
-  console.log("get/modificar/id");
-  try {
-    var id = req.params.id;
-    var novedad = await novedadesModel.getNovedadesById(id);
-    console.log("algo bonito", novedad);
-    // res.render("admin/modificar", {
-    //   layout: "admin/layout",
-    //   novedad,
-    // });
-    return novedad;
-  } catch (error) {
-    console.log(error);
-    res.render("error", { error });
-  }
-});
-
 router.post("/modificar/", async (req, res, next) => {
-  console.log("post/modificar/id");
   try {
+    console.log("ESTOS SON LOS REQ.FILES", req.files);
+    var img_id = req.body.img_original;
+    var borrar_img_vieja = false;
+    console.log("ESTOS SON LOS REQ.BODY.IMG", req.body.img_original);
+    if (req.body.img_delete === "1") {
+      
+      img_id = null;
+      borrar_img_vieja = true;
+    } else {
+      if (req.files && req.files.imagen) { // Verifica si se adjuntó un nuevo archivo de imagen
+         imagen = req.files.imagen;
+         console.log("variable imagen",imagen);
+         img_id = (await uploader(imagen.tempFilePath)).public_id;
+         borrar_img_vieja = false;
+       }
+    }
+    if (borrar_img_vieja && req.body.img_original && img_id !== req.body.img_original) {
+      await destroy(req.body.img_original);
+     }
+
     var id = req.body.modifyModalId;
 
     var obj = {
       titulo: req.body.modifyModalTitulo,
       subtitulo: req.body.modifyModalSubtitulo,
       cuerpo: req.body.modifyModalCuerpo,
+      img_id,
     };
 
     var novedad1 = await novedadesModel.updateNovedadesById(obj, id);
