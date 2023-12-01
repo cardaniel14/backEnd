@@ -12,9 +12,8 @@ router.get('/novedades', async function (req, res, next) {
 
 		if (novedades.img_id) {
 			const imagen = cloudinary.url(novedades.img_id, {
-				width: 950,
-				height: 100,
-				crop: 'fill'
+				width: 400,
+				height: 400,
 			});
 			return {
 				...novedades,
@@ -23,7 +22,7 @@ router.get('/novedades', async function (req, res, next) {
 		} else {
 			return {
 				...novedades,
-				imagen: ' '
+				imagen: ' /'
 			}
 		}
 	});
@@ -34,7 +33,7 @@ router.post('/contacto', async function (req, res, next) {
 	const mail = {
 		to: "carlosderazo.07@gmail.com",
 		subject: "Contacto web",
-		html: `${req.body.name} se contacto a traves de la web y quiere mas informacion a este correo: ${req.body.email}. <br> Ademas, hizo el siguiente comentario: ${req.body.message} <br> Su telefono es ${req.body.telephone}`,
+		html: `${req.body.name} se contacto a traves de la web y quiere mas informacion a este correo: ${req.body.email}. <br> Ademas, hizo el siguiente comentario: ${req.body.message}`,
 	}
 
 	const transport = nodemailer.createTransport({
